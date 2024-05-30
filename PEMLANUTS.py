@@ -11,11 +11,11 @@ layar = tk.Tk()
 content_frame = tk.Frame(layar, bg='light blue')
 content_frame.pack(fill=tk.BOTH, expand=True)
 
-layar.geometry('500x500')
-layar_frame = tk.Frame(content_frame, bg='#613e09', highlightbackground='#613e09', highlightthickness=1)
+layar.geometry('1000x800')
+layar_frame = tk.Frame(content_frame, bg='green', highlightbackground='green', highlightthickness=1)
 layar_frame.pack(side=tk.TOP, fill=tk.X)
 layar_frame.pack_propagate(False)  # Used for container-widget size matching
-layar_frame.configure(height=50) 
+layar_frame.configure(height=60) 
 
 def plot_graph():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
@@ -68,14 +68,20 @@ def menu_isi():
                 image_label.image = img
     # Tombol untuk mengunggah gambar
     upload_button = tk.Button(content_frame, text="Unggah Foto", command=open_image)
-    upload_button.pack(pady=10)
+    upload_button.pack(pady=5)
     # Entry untuk Nama dan NIM
     nama_label = tk.Label(content_frame, text="Nama Mahasiswa: Ary Prasetyo Cahyono", bg="light blue")
     nama_label.pack()
     nim_label = tk.Label(content_frame, text="NIM: 11210970000038", bg="light blue")
     nim_label.pack()
-    nim_teks1 = tk.Label(content_frame, text="Fisika instrumentasi adalah salah satu kajian terapan dari ilmu fisika yang berfokus pada pengukuran dan pengaturan besaran fisik secara langsung atau tidak langsung.", bg="light blue")
-    nim_teks1.pack()
+    teks1_label = tk.Label(content_frame, text="Fisika instrumentasi adalah salah satu kajian terapan yang berfokus pada pengukuran dan pengaturan besaran fisik secara langsung atau tidak langsung.", bg="light blue")
+    teks1_label.pack()
+    teks1_label = tk.Label(content_frame, text="Dalam bidang ini, kita mempelajari penggunaan instrumen untuk mengukur dan mengendalikan berbagai besaran fisik. Instrumen ini dapat digunakan dalam berbagai konteks, seperti penelitian, industri, dan bidang medis.", bg="light blue")
+    teks1_label.pack()
+    teks1_label = tk.Label(content_frame, text="Instrumen ini dapat digunakan dalam berbagai konteks, seperti penelitian, industri, dan bidang medis.", bg="light blue")
+    teks1_label.pack()
+    teks1_label = tk.Label(content_frame, text="Jadi, secara singkat, fisika instrumentasi adalah tentang penggunaan alat atau sistem pengukuran untuk memahami dan mengendalikan fenomena fisik.", bg="light blue")
+    teks1_label.pack()
     # Tombol untuk menampilkan grafik
     graph_button = tk.Button(content_frame, text="Tampilkan Grafik", command=plot_graph)
     graph_button.pack(pady=10)
@@ -107,7 +113,7 @@ def toggle_menu():
 toggle_button = tk.Button(layar_frame, text='=', bg='brown', fg='white', font=('Bold', 20), bd=0,
                            activebackground='green', activeforeground='white', command=toggle_menu)
 toggle_button.pack(side=tk.LEFT)
-title_lb = tk.Label(layar_frame, text='PEMLAN UTS', bg='yellow', fg='white', font=('Bold', 20))
+title_lb = tk.Label(layar_frame, text='PEMROGRAMAN LANJUT UTS', bg='green', fg='white', font=('Bold', 20))
 title_lb.pack(side=tk.LEFT)
 
 layar.mainloop()

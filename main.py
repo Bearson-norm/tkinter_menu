@@ -1,75 +1,70 @@
+from tkinter import*
 import tkinter as tk
+from tkinter import filedialog
+import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Sample data for the graph
-x = [1, 2, 3, 4, 5]
-y = [3, 5, 7, 2, 8]
+layar = tk.Tk()
+layar.geometry('300x500')
+layar_frame=tk.Frame(layar,bg='green',highlightbackground='white',highlightthickness=1)
+layar_frame.pack(side=tk.TOP,fill=tk.X)
+layar_frame.pack_propagate(False)
+layar_frame.configure(height=50)
 
-# Function to generate content for each page
-def generate_content(page_name):
-  content = tk.Frame(window)
-  if page_name == "menu":
-    content.config(bg="lightblue")
-    label = tk.Label(content, text="This is the Menu Page")
-    label.pack()
-  elif page_name == "profile":
-    content.config(bg="lightgreen")
-    label = tk.Label(content, text="Your Profile Information")
-    label.pack()
-  elif page_name == "graph":
-    content.config(bg="lightyellow")
-    fig, ax = plt.subplots()
-    ax.plot(x, y)
-    ax.set(xlabel='X', ylabel='Y', title='Sample Graph')
-    canvas = plt.get_current_fig_manager().canvas
-    canvas.draw()
-
-    # Option 1: Pack the canvas directly (preferred)
-    # content.pack(fill=tk.BOTH, expand=True)
-
-    # Option 2: Use a container frame with desired size
-    canvas_container = tk.Frame(content, width=500, height=300)
-    canvas_container.pack()
-    canvas_widget = canvas.get_tk_widget()  # Get the Tkinter widget for the canvas
-    canvas_widget.pack(fill=tk.BOTH, expand=True)
-  content.pack(fill=tk.BOTH, expand=True)
-  return content
-
-# Function to toggle the menu visibility
+def isi():
+    print(" sudah malam ngantuk ")
+    
 def toggle_menu():
-  global menu_open
-  if menu_open:
-    menu_button.config(text="<< Menu")
-    menu_frame.pack_forget()
-  else:
-    menu_button.config(text=">> Menu")
-    menu_frame.pack(fill=tk.Y, expand=True)
-  menu_open = not menu_open
 
-# Initialize variables
-window = tk.Tk()
-window.title("Collapsible Menu App")
-window.geometry("500x500")
-menu_open = False
+    def colapse_toggle_menu():
+        toggle_menu_fm.destroy()
+        toggle_button.config(text='=')
+        toggle_button.config(command=toggle_menu)
 
-# Create the menu frame
-menu_frame = tk.Frame(window)
+    toggle_menu_fm=tk.Frame(layar,bg='green')
+    toggle_menu_fm.place(x=0,y=50,height=500,width=200)
+    home_button=tk.Button(toggle_menu_fm,text='Home',font=('Bold',20),bd=0,bg='green',fg='white',activebackground='green',activeforeground='white',command=isi)
+    home_button.place(x=20,y=20)
+    produc_button=tk.Button(toggle_menu_fm,text='Product',font=('Bold',20),bd=0,bg='green',fg='white',activebackground='green',activeforeground='white')
+    produc_button.place(x=20,y=80)
+    menu_button=tk.Button(toggle_menu_fm,text='Menu',font=('Bold',20),bd=0,bg='green',fg='white',activebackground='green',activeforeground='white')
+    menu_button.place(x=20,y=140)
+    profile_button=tk.Button(toggle_menu_fm,text='profile',font=('Bold',20),bd=0,bg='green',fg='white',activebackground='green',activeforeground='white')
+    profile_button.place(x=20,y=200)
+    def toggle_profile():
+        def collapse_toggle_profile():
+            toggle_profile_fm.destroy()
+            toggle_profile.config(text='--')
+            toggle_profile.config(command=toggle_profile)
+        toggle_profile_fm=tk.Frame(toggle_menu_fm,bg='green')
+        toggle_profile_fm.place(x=0,y=50,height=500,width=200)
 
-# Create menu buttons
-menu_button = tk.Button(menu_frame, text=">> Menu", command=toggle_menu)
-menu_button.pack(pady=10)
-menu_button_menu = tk.Button(menu_frame, text="Menu", command=lambda: generate_content("menu"))
-menu_button_menu.pack(pady=5)
-menu_button_profile = tk.Button(menu_frame, text="Profile", command=lambda: generate_content("profile"))
-menu_button_profile.pack(pady=5)
-menu_button_graph = tk.Button(menu_frame, text="Graph", command=lambda: generate_content("graph"))
-menu_button_graph.pack(pady=5)
+        def image_profile():
+            image_path = "favicon.ico"
+            image = tk.PhotoImage(file=image_path)
+            image_label.pack()
+            image_label = tk.Label(image_profile, image=image).place(x=50,y=250)
+            toggle_button.config(text='-')
+            toggle_button.config(command=collapse_toggle_profile)
+            toggle_button.config(text='X')
+            toggle_button.config(command=colapse_toggle_menu)
+    toggle_button=tk.Button(layar_frame,text='=',bg='green',fg='white',font=('Bold',20),bd=0,activebackground='green',activeforeground='white',command=toggle_menu)
+    toggle_button.pack(side=tk.LEFT)
+    title_lb=tk.Label(layar_frame,text='Tkinter menu',bg='green',fg='white',font=('Bold',20))
+    title_lb.pack(side=tk.LEFT)
 
-# Create the initial content frame (empty)
-content_frame = generate_content("")
+data1 = {'Country':['A','B','C','D','E'],
+        'gdp_per_capita':[45000,42000,52000,49000,47000]
+        }
+df1 = pd.DataFrame(data1)
 
-# Display everything
-menu_frame.pack(fill=tk.Y, expand=True)
-content_frame.pack(fill=tk.BOTH, expand=True)
+figure1 = plt.Figure(figsize=(6,5), dpi = 500)
+ax1 = figure1.add_subplot(111)
+bar1 = FigureCanvasTkAgg(figure1, layar)
+bar1.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
+df1 = df1[['Country','gdp_per_capita']].groupby('Country').sum()
+df1.plot(kind='bar', legend = True, ax = ax1)
+ax1.set_title('Country Vs. GDP Per Capita')
 
-window.mainloop()
+layar.mainloop()

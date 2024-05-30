@@ -7,10 +7,14 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import pandas as pd
 
 layar = tk.Tk()
+
+content_frame = tk.Frame(layar, bg='light blue')
+content_frame.pack(fill=tk.BOTH, expand=True)
+
 layar.geometry('500x500')
-layar_frame=tk.Frame(layar,bg='green',highlightbackground='white',highlightthickness=1)
-layar_frame.pack(side=tk.TOP,fill=tk.X)
-layar_frame.pack_propagate(False) # digunakan untuk mencocokan antara container dengan widget, jika false, maka widget tidak akan mencocokan ukurannya dengan container
+layar_frame = tk.Frame(content_frame, bg='#613e09', highlightbackground='#613e09', highlightthickness=1)
+layar_frame.pack(side=tk.TOP, fill=tk.X)
+layar_frame.pack_propagate(False)  # Used for container-widget size matching
 layar_frame.configure(height=50) 
 
 def plot_graph():
@@ -46,11 +50,13 @@ def plot_graph():
     canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
 def menu_isi():
+    menu_frame = tk.Frame(content_frame, bg="light blue")
+    menu_frame.pack(side=tk.LEFT, fill=tk.Y)
     # Label untuk judul
-    title_label = tk.Label(layar, text="Biodata Mahasiswa", font=("Helvetica", 16), bg="light blue")
+    title_label = tk.Label(content_frame, text="Biodata Mahasiswa", font=("Helvetica", 16), bg="light blue")
     title_label.pack(pady=10)
     # Label untuk gambar mahasiswa
-    image_label = tk.Label(layar, bg="light blue")
+    image_label = tk.Label(content_frame, bg="light blue")
     image_label.pack()
     def open_image():
         filename = filedialog.askopenfilename(title="Pilih gambar mahasiswa")
@@ -61,20 +67,20 @@ def menu_isi():
                 image_label.config(image=img)
                 image_label.image = img
     # Tombol untuk mengunggah gambar
-    upload_button = tk.Button(layar, text="Unggah Foto", command=open_image)
+    upload_button = tk.Button(content_frame, text="Unggah Foto", command=open_image)
     upload_button.pack(pady=10)
     # Entry untuk Nama dan NIM
-    nama_label = tk.Label(layar, text="Nama Mahasiswa: Ary Prasetyo Cahyono", bg="light blue")
+    nama_label = tk.Label(content_frame, text="Nama Mahasiswa: Ary Prasetyo Cahyono", bg="light blue")
     nama_label.pack()
-    nim_label = tk.Label(layar, text="NIM: 11210970000038", bg="light blue")
+    nim_label = tk.Label(content_frame, text="NIM: 11210970000038", bg="light blue")
     nim_label.pack()
-    nim_teks1 = tk.Label(layar, text="Fisika instrumentasi adalah salah satu kajian terapan dari ilmu fisika yang berfokus pada pengukuran dan pengaturan besaran fisik secara langsung atau tidak langsung.", bg="light blue")
+    nim_teks1 = tk.Label(content_frame, text="Fisika instrumentasi adalah salah satu kajian terapan dari ilmu fisika yang berfokus pada pengukuran dan pengaturan besaran fisik secara langsung atau tidak langsung.", bg="light blue")
     nim_teks1.pack()
     # Tombol untuk menampilkan grafik
-    graph_button = tk.Button(layar, text="Tampilkan Grafik", command=plot_graph)
+    graph_button = tk.Button(content_frame, text="Tampilkan Grafik", command=plot_graph)
     graph_button.pack(pady=10)
     # Tombol untuk keluar dari program
-    exit_button = tk.Button(layar, text="Keluar", command=exit_program)
+    exit_button = tk.Button(content_frame, text="Keluar", command=exit_program)
     exit_button.pack(pady=10)
 
 def exit_program():
@@ -86,20 +92,22 @@ def toggle_menu():
         toggle_button.config(text='=')
         toggle_button.config(command=toggle_menu)
 
-    toggle_menu_fm=tk.Frame(layar,bg='green')
-    toggle_menu_fm.place(x=0,y=50,height=500,width=200)
+    toggle_menu_fm = tk.Frame(content_frame, bg='green')
+    toggle_menu_fm.pack(side=tk.LEFT, fill=tk.Y)  # Fill vertically
 
     # Menu
-    menu_button=tk.Button(toggle_menu_fm,text='Menu',font=('Bold',20),bd=0,bg='green',fg='white',activebackground='green',activeforeground='white', command=menu_isi)
-    menu_button.place(x=20,y=20)
+    menu_button = tk.Button(toggle_menu_fm, text='Menu', font=('Bold', 20), bd=0, bg='green', fg='white',
+                             activebackground='green', activeforeground='white', command=menu_isi)
+    menu_button.pack(padx=20, pady=20)  # Add padding for aesthetics
 
     # Collapse
     toggle_button.config(text='X')
     toggle_button.config(command=colapse_toggle_menu)
 
-toggle_button=tk.Button(layar_frame,text='=',bg='brown',fg='white',font=('Bold',20),bd=0,activebackground='green',activeforeground='white',command=toggle_menu)
+toggle_button = tk.Button(layar_frame, text='=', bg='brown', fg='white', font=('Bold', 20), bd=0,
+                           activebackground='green', activeforeground='white', command=toggle_menu)
 toggle_button.pack(side=tk.LEFT)
-title_lb=tk.Label(layar_frame,text='PEMLAN UTS',bg='yellow',fg='white',font=('Bold',20))
+title_lb = tk.Label(layar_frame, text='PEMLAN UTS', bg='yellow', fg='white', font=('Bold', 20))
 title_lb.pack(side=tk.LEFT)
 
 layar.mainloop()

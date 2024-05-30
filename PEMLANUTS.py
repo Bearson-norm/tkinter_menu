@@ -45,7 +45,7 @@ def plot_graph():
     ax2.set_title('Bar Plot from Data')
     ax2.legend()
 
-    canvas = FigureCanvasTkAgg(fig, master=layar)
+    canvas = FigureCanvasTkAgg(fig, master=content_frame)
     canvas.draw()
     canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
